@@ -1,0 +1,428 @@
+22/3/2023
+
+
+1==>> Question 8.........
+      mkdir -p /root/hello
+      useradd maa
+     1.... find / -user maa -exec cp -rvf {} /root/hello \; (recorsible(dir) vabor(process) forcefull)
+      execute cp (copy ) -a (not change owner ) {} (output enclose)
+
+      find / -user maa -exec cp -a -rvf {} /root/hello \;
+      find / -user maa -exec cp -rf {} /root/hello \;(not see on the screen)
+
+    2....find /usr/ -size -10M -perm /g=s > /root/lines
+          
+        find /-size +10K -size -50k > /root/lines
+
+
+
+
+
+
+
+2==>> Hostname....change
+      hostnamectl set-hostname servername.example.com
+
+3==>> Change password ........................................
+      when system start two option come
+      press up down key initially
+      normal mode to run ma chine 
+      second is rescue( to restart machine)
+
+      at second press e.
+      at end 4 line. enter (rd.break not enter and press ctrl x)
+      new window open....
+      press enter then 
+      mount -o remount,rw /sysroot  #to rw mode me
+      then press enter
+      chroot /sysroot press enter 
+      passwd
+      press enter
+      enter password===> 343sdu (not still define in maitaince mode me)
+      touch /.autorelabel ( to create file in the hidden mode)
+      press enter  
+
+      (write two time) exit exit .........
+
+
+     sometime open the unexpected window then you
+     root 
+     enter passwrd
+     systemctl set-default graphical.target
+     press enter
+     startx
+     press enter
+
+
+4==>> using automaunter service mount remoteuser onto the provided folder /ourhome/RemoteuserX
+
+userdel remoteuser(delete )
+
+
+
+yum install autofs -y
+
+vim /etc/auto.master.d/new.autofs
+
+/-          /etc/auto.misc    
+vim /etc/auto.misc
+
+we have to enter
+/netdir/remoteuser1       -rw,soft,inter       hostname or ip:/netdir/remoteuser1
+
+systemctl enable --now autofs    (httpd , tuned,  auto)
+
+
+useradd remoteuser1
+rm  	-rf /home/remoteuser1
+
+su 	- remounteuser
+systemctl restart autofs
+
+su - remoteuser1
+
+
+
+to check mount
+df -h
+
+5==>>sudo privilege....
+A group name is 'elite', they have to give administrative permission without password ?...
+sudo==>> superuser do
+visudo
+%elite      ALL=(ALL)        NOPASSWD:ALL
+useradd tushar
+usermod -aG wheel tushar
+id tushar
+passwd tushar 
+9588
+su - tushar
+sudo useradd sushantt
+9588
+id sushant
+
+
+6==>>
+testapp (command hai)
+useradd sonu
+su - sonu(login)
+then logout
+
+make directory into  in regularl use me
+mkdir .testapp
+
+ch .testapp
+for configurations
+vim testapp.conf
+cd 
+login(the home directions)
+su - sonu
+
+
+vim /bin/testapp(root)  
+
+enter code in vim{mage 20230322134308}
+
+chmod a+x /bin/testapp
+
+7==>>shelll Script
+write a script mysearch to list the contents of /usr that are smaller  10M and set group id (SGID) permission . The script should be persent in /usr/local/bin
+After execution , the script should automatically write all the line and save it to /root/lines
+
+ANS...
+find /usr/ -size -10M (less than 10 m)
+find /usr/ -size -10M -perm (permission)
+
+find /usr/ -size -10M -perm /g=s 
+#to save the output in other file
+find /usr/ -size -10M -perm /g=s > /root/lines
+
+cat file name(get the file detail without move to other file)
+
+8 ===>> move to make script..............(doubt)
+
+
+
+vim /usr/local/bin/mysearch
+enter code in vim  image {20230323073749}
+ 
+chmod a+x /usr/local/bin/mysearch
+
+Show error ( echo $PATH)
+mv /usr/local/bin/mysearch  /usr/local/sbin/
+
+mysearch
+
+
+
+9===>how to profile set ?
+
+yum install tuned
+systemctl enable --now tuned (to on)
+tuned-adm recommend
+tuned-adm profile virtual-guest
+tuned-adm active
+tuned-adm list
+
+
+BACKUP..........................
+tar -cjvf /home/backup.tar.bz2 /etc
+
+to see backup
+ls /homel
+
+
+10==>> For partition .............
+
+
+m (to see option)
+n ( partition ke liye)
+enter press
+
+.
+.
+.
+w(write)
+to see the partions
+lsblk
+to create partions
+fdisk /dev/sdal
+
+file system......
+mkfs.ext4 /dev/sdb1
+
+mount /dev/sdb1 /data
+lsblk
+
+
+PARTITION ..........
+firstly create the disk ==>> setting ==>> harddissk cd/dvd ==>> sata
+then ,....
+
+sdc  4gb
+partition command....
+fdisk /dev/sdc
+press enter
+m ==>> m(option see)
+n  (add partition)
+press enter
+enter
+enter
+enter
++500M (number option )
+enter
+w(write disk me write)
+lsblk
+option......
+1...mkfs  for make file system 
+    file system......
+    mkfs.ext4 /dev/sdb1
+
+    mount /dev/sdb1 /data
+   lsblk
+2.... mkswap ( FOR SWAP)
+mkswap /dev/sdc1
+swapon /dev/sdc1
+
+vim /etc/fstab
+in text editor......
+/dev/sdb2	none 	swap	defaults 	0	0
+save it
+checking..
+lsblk
+
+
+
+to make dir
+
+... to saddd list in virtual box
+
+swap is only  supported memory when the ram is full then all stored shifted into the swap.......
+
+
+23/3/2023.....................................
+
+
+4 Download in linux
+1....(firstly set the  network configuration)
+
+    mkdir gg
+    ll
+    rpm -q wget
+
+2.....(ssh se remote login )
+     ssh root@65.0.19.59
+3..container....
+ docal container launch karta hai
+in the container technoloy me small contaner form 
+if any containter has more trafiic then other container launched  (auto scaling ==>scalibility)
+
+two method for container( image )
+not full os in container only serve and intertibe sierve 
+ 8 gb but for os 10 gb
+but not do 8 gb for container
+in container(shell and image)
+1..image container by
+2...docal file me peramiter write what to do . not to build it is availabel in the server          just to download it (wget  url paste)
+
+========>>>dockel file >>and >>>dockel comment>>>
+
+
+step 1.. ssh sonu@localhost
+step2 .. wget url
+step3 .. yum install podman
+step4  .. podman build . -t watcher
+for listing ..
+podman image ls
+
+how to remote access??
+
+
+in github dockelfile 
+A/C Abhijitsingh4En
+   repository:- jenkins(dockelfile)
+
+
+
+5...partition 
+firstly create the disk ==>> setting ==>> harddissk cd/dvd ==>> sata
+then ,....
+
+sdc  4gb
+partition command....
+fdisk /dev/sdc
+press enter
+m ==>> m(option see)
+
+
+................
+....................
+LVM (logical volume manage) which is given to client according to desire 
+
+PV(physical volume) ===>>>  VG(volume Group) ===>> LVM(logical volume manage)
+
+
+
+
+6......
+How to create lvm ?
+#create physical volume
+pvcreate /dev/sdb2
+
+#to check
+pvs
+
+#to detail
+pvdisplay
+
+#creae vG (volume group)
+vgcreate -s 8M myvol /dev/sdb2   ( if you not give the size then it automatically 4M)
+
+#to see and detail
+vgs
+vgdisplay   (1gb = 1000M , 1 gib =  1024M)
+
+#create lv (logical volume)
+lvcreate -l 50 -n sonu/dev/myvol (-l for physical size, -L for acture size)
+
+#to see
+lsblk
+
+#now give the filesystem (ext1-4, vfat, xfet)
+
+mkfs.vfat /dev/myvol/sonu
+
+#for mounting 
+mkdir /database
+mount /dev/myvol/sonu /database
+lsblk
+
+#to see the UUID
+blkid     ===>>>(copy UUID)
+
+#open text editor (here fstab is for permanent mount)
+vim /etc/fstab 
+entry UUID
+:wq!
+
+#to check (if any error present than it pops error otherwise not)
+mount -a
+
+#to see
+lsblk
+
+
+############ same step for the acture size 
+but here not give the size of vg and use -L in lv 
+open text editor for give path 
+
+
+7.....Extend Lvm
+lvextend -rL 300M /dev/myvg/ashu
+
+r=> file system resize
+L=> acurate size 
+
+8.....
+password policy set
+chage username
+enter 
+we would see two option 
+1 minimun   (leave it)
+2maximum    (enter number as work for DAY)
+press  enter
+enter
+
+
+ 24 / 3/2023..............
+
+root
+passwd ==>> sonu123
+
+wget https://github.com/AbhijitSingh4En/Jenkins/blob/511a21f86a2cdd1a01363dd04458ecc21c6b1fd3/Dockerfile
+
+
+
+
+cd for the dir
+cat for the file
+
+docler file ke liya...................................................(exam)
+ssh root@localhost
+wget url
+yum install podman
+podman build . -t watcher
+podman image ls
+
+docker file .......................(practical)
+useradd andrew
+passwd 1234
+vim /home/andrew/Dockerfile
+enter
+FROM  docker.io/library/httpd:latest  (root)
+:wq!
+
+ssh andrew@localhost (login)
+podman build . -t watcher (internet connect)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
